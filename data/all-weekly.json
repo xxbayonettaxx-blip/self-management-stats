@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-10T13:22:40.205Z",
+  "regimeStart": "2026-08-08",
+  "categorySince": {
+    "運動": "2026-08-02"
+  },
+  "matchToleranceMinutes": 10,
+  "weeksRecorded": 3,
+  "weeksElapsed": 3,
+  "normalizationNotes": [
+    "写経を回復・生活に統一（読書と休息を兼ねた時間として扱う）",
+    "履歴書・職務経歴書の作成を営業に統一",
+    "ハローワークを営業に統一",
+    "移動のみの作業行を移動時間へ振替"
+  ],
+  "policy": {
+    "excluded": [
+      "体調・症状の記述",
+      "相手先の業種",
+      "提案先の情報",
+      "就寝起床の時刻",
+      "氏名・署名"
+    ]
+  },
+  "weeks": [
+    {
+      "weekStart": "2026-07-18",
+      "weekEnd": "2026-07-24",
+      "regime": "old",
+      "recordedWeekdays": 5,
+      "recordedDays": 7,
+      "weekendMinutes": 645,
+      "totalMinutes": 2110,
+      "travelMinutes": 180,
+      "categories": {
+        "制作": 540,
+        "基礎学習": 190,
+        "営業": 590,
+        "運用・管理": 180,
+        "回復・生活": 320,
+        "運動": null
+      },
+      "estimate": {
+        "basis": "自己申告",
+        "blocks": 21,
+        "withEstimate": 8,
+        "punched": 0,
+        "measurable": 8,
+        "maeAll": 10.6,
+        "maeExcludingLargest": 6.4,
+        "withinTolerance": 5,
+        "largestOutlier": {
+          "label": "写経",
+          "planned": 180,
+          "actual": 140
+        }
+      },
+      "priority": {
+        "topAchieved": 2,
+        "topPlanned": 3,
+        "overallScore": 4.2
+      },
+      "deviationMinutes": 190,
+      "sleep": {
+        "avgMinutes": 438,
+        "minMinutes": 330,
+        "maxMinutes": 570
+      },
+      "planImpact": {
+        "avg": 0.8,
+        "distribution": {
+          "0": 2,
+          "1": 2,
+          "2": 1
+        }
+      }
+    },
+    {
+      "weekStart": "2026-07-25",
+      "weekEnd": "2026-07-31",
+      "regime": "old",
+      "recordedWeekdays": 5,
+      "recordedDays": 7,
+      "weekendMinutes": 210,
+      "totalMinutes": 1440,
+      "travelMinutes": 200,
+      "categories": {
+        "制作": 680,
+        "基礎学習": 210,
+        "営業": 120,
+        "運用・管理": 120,
+        "回復・生活": 220,
+        "運動": null
+      },
+      "estimate": {
+        "basis": "自己申告",
+        "blocks": 17,
+        "withEstimate": 12,
+        "punched": 0,
+        "measurable": 12,
+        "maeAll": 0.8,
+        "maeExcludingLargest": 0,
+        "withinTolerance": 12,
+        "largestOutlier": {
+          "label": "図書管理アプリ",
+          "planned": 120,
+          "actual": 130
+        }
+      },
+      "priority": {
+        "topAchieved": 2,
+        "topPlanned": 2,
+        "overallScore": 4.5
+      },
+      "deviationMinutes": 90,
+      "sleep": {
+        "avgMinutes": 432,
+        "minMinutes": 380,
+        "maxMinutes": 540
+      },
+      "planImpact": {
+        "avg": 0.4,
+        "distribution": {
+          "0": 3,
+          "1": 2,
+          "2": 0
+        }
+      }
+    },
+    {
+      "weekStart": "2026-08-03",
+      "weekEnd": "2026-08-09",
+      "regime": "old",
+      "recordedWeekdays": 5,
+      "recordedDays": 7,
+      "weekendMinutes": 160,
+      "totalMinutes": 1777,
+      "travelMinutes": 200,
+      "categories": {
+        "制作": 653,
+        "基礎学習": 315,
+        "営業": 47,
+        "運用・管理": 187,
+        "回復・生活": 171,
+        "運動": 404
+      },
+      "estimate": {
+        "basis": "実測",
+        "blocks": 42,
+        "withEstimate": 34,
+        "punched": 34,
+        "measurable": 32,
+        "maeAll": 2.6,
+        "maeExcludingLargest": 2.1,
+        "withinTolerance": 31,
+        "largestOutlier": {
+          "label": "アプリ改修",
+          "planned": 30,
+          "actual": 12
+        }
+      },
+      "priority": {
+        "topAchieved": 3,
+        "topPlanned": 3,
+        "overallScore": 4.4
+      },
+      "deviationMinutes": 12,
+      "sleep": {
+        "avgMinutes": 422,
+        "minMinutes": 420,
+        "maxMinutes": 430
+      },
+      "planImpact": {
+        "avg": 0.2,
+        "distribution": {
+          "0": 4,
+          "1": 1,
+          "2": 0
+        }
+      }
+    }
+  ]
+}

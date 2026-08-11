@@ -1,0 +1,19 @@
+<section class="block">
+  <h3><%= t.title %></h3>
+  <% if (t.note) { %><p class="note"><%= t.note %></p><% } %>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><% t.headers.forEach(h => { %><th scope="col"><%= h %></th><% }) %></tr>
+      </thead>
+      <tbody>
+        <% if (t.rows.length === 0) { %>
+          <tr><td colspan="<%= t.headers.length %>">記録がありません</td></tr>
+        <% } %>
+        <% t.rows.forEach(row => { %>
+          <tr><% row.forEach((cell, i) => { %><td<%= i === 0 ? ' class="col-key"' : '' %>><%= cell %></td><% }) %></tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>

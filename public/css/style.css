@@ -1,0 +1,93 @@
+/* CSPを style-src 'self' で運用するため、HTMLのstyle属性は使わず表示制御はすべてここで行う。 */
+
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --line: #e2e6ec;
+  --text: #1e2733;
+  --muted: #5c6a7d;
+  --accent: #2563eb;
+  --radius: 10px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 20px 64px;
+  font-family: system-ui, "Yu Gothic UI", sans-serif;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 15px;
+}
+
+h1, h2, h3 { line-height: 1.4; }
+
+.page-head, .tabs, .view, .page-foot, .notice { max-width: 940px; margin-inline: auto; }
+
+.page-head { padding: 48px 0 24px; }
+.page-head h1 { margin: 0 0 16px; font-size: 1.9rem; letter-spacing: .01em; }
+.page-head p { margin: 0 0 10px; color: var(--muted); max-width: 62ch; }
+
+/* --- タブ --- */
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.tab {
+  font: inherit; font-weight: 700; cursor: pointer;
+  padding: 9px 18px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+}
+.tab:hover { border-color: #c3ccd8; color: var(--text); }
+.tab.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tab:focus-visible { outline: 3px solid #93b4fb; outline-offset: 2px; }
+
+/* --- ビュー --- */
+.view { display: none; }
+.view.is-active { display: block; }
+.view-title { margin: 0 0 20px; font-size: 1.15rem; color: var(--muted); font-weight: 700; }
+
+/* --- 数値カード --- */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 30px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+.card-label { margin: 0; font-size: .82rem; font-weight: 700; color: var(--muted); }
+.card-value { margin: 4px 0 2px; font-size: 1.85rem; font-weight: 800; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.card-note { margin: 0; font-size: .78rem; color: var(--muted); line-height: 1.5; }
+
+/* --- ブロック --- */
+.block { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; margin-bottom: 18px; }
+.block h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.note { margin: 0 0 16px; font-size: .85rem; color: var(--muted); max-width: 74ch; }
+
+.chart-wrap { position: relative; height: 300px; }
+.chart-failed { display: flex; align-items: center; justify-content: center; height: auto; min-height: 80px; font-size: .85rem; color: var(--muted); text-align: center; }
+
+/* --- 表 --- */
+/* 幅の広い表はページ全体を押し広げず、この枠の中だけで横スクロールさせる。 */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: .86rem; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 12px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+th:first-child, td.col-key { text-align: left; }
+thead th { background: #eef1f5; color: var(--muted); font-size: .78rem; position: sticky; top: 0; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: #f4f7fd; }
+
+/* --- 注記 --- */
+.notice { margin: 0 0 24px; padding: 14px 18px; border: 1px solid #f0d8a8; background: #fdf6e6; border-radius: var(--radius); font-size: .87rem; }
+
+.page-foot { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+.page-foot h2 { font-size: 1.05rem; color: var(--text); }
+.page-foot h3 { font-size: .92rem; color: var(--text); margin: 22px 0 6px; }
+.page-foot p, .page-foot li { max-width: 74ch; }
+.page-foot ul { padding-left: 1.2em; }
+.page-foot li { margin-bottom: 4px; }
+.page-foot .meta { margin-top: 26px; font-size: .82rem; }
+
+@media (max-width: 640px) {
+  body { padding: 0 12px 40px; font-size: 14px; }
+  .page-head { padding: 30px 0 18px; }
+  .page-head h1 { font-size: 1.5rem; }
+  .card-value { font-size: 1.5rem; }
+  .block { padding: 16px; }
+  .chart-wrap { height: 260px; }
+}

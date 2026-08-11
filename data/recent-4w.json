@@ -1,0 +1,982 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-10T13:22:40.205Z",
+  "regimeStart": "2026-08-08",
+  "categorySince": {
+    "運動": "2026-08-02"
+  },
+  "matchToleranceMinutes": 10,
+  "weeksRecorded": 3,
+  "weeksElapsed": 3,
+  "normalizationNotes": [
+    "写経を回復・生活に統一（読書と休息を兼ねた時間として扱う）",
+    "履歴書・職務経歴書の作成を営業に統一",
+    "ハローワークを営業に統一",
+    "移動のみの作業行を移動時間へ振替"
+  ],
+  "policy": {
+    "excluded": [
+      "体調・症状の記述",
+      "相手先の業種",
+      "提案先の情報",
+      "就寝起床の時刻",
+      "氏名・署名"
+    ]
+  },
+  "weeks": [
+    {
+      "weekStart": "2026-07-18",
+      "weekEnd": "2026-07-24",
+      "regime": "old",
+      "recordedWeekdays": 5,
+      "recordedDays": 7,
+      "totalMinutes": 2110,
+      "weekendMinutes": 645,
+      "travelMinutes": 180,
+      "categories": {
+        "制作": 540,
+        "基礎学習": 190,
+        "営業": 590,
+        "運用・管理": 180,
+        "回復・生活": 320,
+        "運動": null
+      },
+      "estimate": {
+        "basis": "自己申告",
+        "blocks": 21,
+        "withEstimate": 8,
+        "punched": 0,
+        "measurable": 8,
+        "maeAll": 10.6,
+        "maeExcludingLargest": 6.4,
+        "withinTolerance": 5,
+        "largestOutlier": {
+          "label": "写経",
+          "planned": 180,
+          "actual": 140
+        }
+      },
+      "priority": {
+        "topAchieved": 2,
+        "topPlanned": 3,
+        "overallScore": 4.2
+      },
+      "deviationMinutes": 190,
+      "sleep": {
+        "avgMinutes": 438,
+        "minMinutes": 330,
+        "maxMinutes": 570
+      },
+      "planImpact": {
+        "avg": 0.8,
+        "distribution": {
+          "0": 2,
+          "1": 2,
+          "2": 1
+        }
+      },
+      "normalizationNotes": [
+        "写経を回復・生活に統一（読書と休息を兼ねた時間として扱う）",
+        "履歴書・職務経歴書の作成を営業に統一",
+        "ハローワークを営業に統一",
+        "移動のみの作業行を移動時間へ振替"
+      ],
+      "daily": [
+        {
+          "date": "2026-07-18",
+          "sleepMinutes": 450,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-19",
+          "sleepMinutes": 450,
+          "planImpact": 0,
+          "topPriority": "計画なし"
+        },
+        {
+          "date": "2026-07-20",
+          "sleepMinutes": 330,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-21",
+          "sleepMinutes": 420,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-22",
+          "sleepMinutes": 450,
+          "planImpact": 1,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-23",
+          "sleepMinutes": 420,
+          "planImpact": 1,
+          "topPriority": "一部"
+        },
+        {
+          "date": "2026-07-24",
+          "sleepMinutes": 570,
+          "planImpact": 2,
+          "topPriority": "未着手"
+        }
+      ],
+      "estimates": [
+        {
+          "date": "2026-07-21",
+          "category": "基礎学習",
+          "label": "図書管理アプリ",
+          "planned": 60,
+          "actual": 60,
+          "punched": false
+        },
+        {
+          "date": "2026-07-21",
+          "category": "基礎学習",
+          "label": "ネットワーク",
+          "planned": 30,
+          "actual": 30,
+          "punched": false
+        },
+        {
+          "date": "2026-07-21",
+          "category": "基礎学習",
+          "label": "データベース",
+          "planned": 30,
+          "actual": 30,
+          "punched": false
+        },
+        {
+          "date": "2026-07-22",
+          "category": "回復・生活",
+          "label": "写経",
+          "planned": 180,
+          "actual": 140,
+          "punched": false
+        },
+        {
+          "date": "2026-07-22",
+          "category": "営業",
+          "label": "ハローワーク",
+          "planned": 20,
+          "actual": 40,
+          "punched": false
+        },
+        {
+          "date": "2026-07-22",
+          "category": "営業",
+          "label": "履歴書作成",
+          "planned": 30,
+          "actual": 30,
+          "punched": false
+        },
+        {
+          "date": "2026-07-23",
+          "category": "制作",
+          "label": "フェーズ６ミーティング",
+          "planned": 30,
+          "actual": 30,
+          "punched": false
+        },
+        {
+          "date": "2026-07-23",
+          "category": "制作",
+          "label": "フェーズ６：原案生成",
+          "planned": 15,
+          "actual": 40,
+          "punched": false
+        }
+      ],
+      "learning": []
+    },
+    {
+      "weekStart": "2026-07-25",
+      "weekEnd": "2026-07-31",
+      "regime": "old",
+      "recordedWeekdays": 5,
+      "recordedDays": 7,
+      "totalMinutes": 1440,
+      "weekendMinutes": 210,
+      "travelMinutes": 200,
+      "categories": {
+        "制作": 680,
+        "基礎学習": 210,
+        "営業": 120,
+        "運用・管理": 120,
+        "回復・生活": 220,
+        "運動": null
+      },
+      "estimate": {
+        "basis": "自己申告",
+        "blocks": 17,
+        "withEstimate": 12,
+        "punched": 0,
+        "measurable": 12,
+        "maeAll": 0.8,
+        "maeExcludingLargest": 0,
+        "withinTolerance": 12,
+        "largestOutlier": {
+          "label": "図書管理アプリ",
+          "planned": 120,
+          "actual": 130
+        }
+      },
+      "priority": {
+        "topAchieved": 2,
+        "topPlanned": 2,
+        "overallScore": 4.5
+      },
+      "deviationMinutes": 90,
+      "sleep": {
+        "avgMinutes": 432,
+        "minMinutes": 380,
+        "maxMinutes": 540
+      },
+      "planImpact": {
+        "avg": 0.4,
+        "distribution": {
+          "0": 3,
+          "1": 2,
+          "2": 0
+        }
+      },
+      "normalizationNotes": [
+        "写経を回復・生活に統一（読書と休息を兼ねた時間として扱う）"
+      ],
+      "daily": [
+        {
+          "date": "2026-07-25",
+          "sleepMinutes": 450,
+          "planImpact": 1,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-26",
+          "sleepMinutes": 420,
+          "planImpact": 1,
+          "topPriority": "計画なし"
+        },
+        {
+          "date": "2026-07-27",
+          "sleepMinutes": 540,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-28",
+          "sleepMinutes": 450,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-29",
+          "sleepMinutes": 390,
+          "planImpact": 1,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-30",
+          "sleepMinutes": 400,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-07-31",
+          "sleepMinutes": 380,
+          "planImpact": 1,
+          "topPriority": "達成"
+        }
+      ],
+      "estimates": [
+        {
+          "date": "2026-07-27",
+          "category": "運用・管理",
+          "label": "週の計画策定",
+          "planned": 60,
+          "actual": 60,
+          "punched": false
+        },
+        {
+          "date": "2026-07-27",
+          "category": "営業",
+          "label": "クラウドソーシング市場観測",
+          "planned": 30,
+          "actual": 30,
+          "punched": false
+        },
+        {
+          "date": "2026-07-28",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 120,
+          "actual": 130,
+          "punched": false
+        },
+        {
+          "date": "2026-07-28",
+          "category": "制作",
+          "label": "ダッシュボードのコーチング",
+          "planned": 60,
+          "actual": 60,
+          "punched": false
+        },
+        {
+          "date": "2026-07-29",
+          "category": "回復・生活",
+          "label": "写経",
+          "planned": 180,
+          "actual": 180,
+          "punched": false
+        },
+        {
+          "date": "2026-07-30",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 120,
+          "actual": 120,
+          "punched": false
+        },
+        {
+          "date": "2026-07-30",
+          "category": "基礎学習",
+          "label": "データベース",
+          "planned": 60,
+          "actual": 60,
+          "punched": false
+        },
+        {
+          "date": "2026-07-30",
+          "category": "基礎学習",
+          "label": "コンピュータ言語",
+          "planned": 30,
+          "actual": 30,
+          "punched": false
+        },
+        {
+          "date": "2026-07-30",
+          "category": "制作",
+          "label": "週次ログに学習記録タブ追加",
+          "planned": 30,
+          "actual": 30,
+          "punched": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 120,
+          "actual": 120,
+          "punched": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "基礎学習",
+          "label": "データベース",
+          "planned": 60,
+          "actual": 60,
+          "punched": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "基礎学習",
+          "label": "セキュリティ、ネットワーク",
+          "planned": 60,
+          "actual": 60,
+          "punched": false
+        }
+      ],
+      "learning": [
+        {
+          "date": "2026-07-30",
+          "category": "Node.js",
+          "title": "Expressライブラリ",
+          "understanding": "概ね理解",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-30",
+          "category": "Node.js",
+          "title": "動的ルーティング",
+          "understanding": "概ね理解",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-30",
+          "category": "コード一般",
+          "title": "三項演算子",
+          "understanding": "概ね理解",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "コード一般",
+          "title": "加算演算子",
+          "understanding": "要復習",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "ネットワーク",
+          "title": "GETメソッド",
+          "understanding": "要復習",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "ネットワーク",
+          "title": "POSTメソッド",
+          "understanding": "要復習",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "ネットワーク",
+          "title": "req.query",
+          "understanding": "要復習",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "Node.js",
+          "title": "Stripe",
+          "understanding": "要復習",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "セキュリティ",
+          "title": "CSRF",
+          "understanding": "要復習",
+          "reviewed": false
+        },
+        {
+          "date": "2026-07-31",
+          "category": "セキュリティ",
+          "title": "Helmet",
+          "understanding": "要復習",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "weekStart": "2026-08-03",
+      "weekEnd": "2026-08-09",
+      "regime": "old",
+      "recordedWeekdays": 5,
+      "recordedDays": 7,
+      "totalMinutes": 1777,
+      "weekendMinutes": 160,
+      "travelMinutes": 200,
+      "categories": {
+        "制作": 653,
+        "基礎学習": 315,
+        "営業": 47,
+        "運用・管理": 187,
+        "回復・生活": 171,
+        "運動": 404
+      },
+      "estimate": {
+        "basis": "実測",
+        "blocks": 42,
+        "withEstimate": 34,
+        "punched": 34,
+        "measurable": 32,
+        "maeAll": 2.6,
+        "maeExcludingLargest": 2.1,
+        "withinTolerance": 31,
+        "largestOutlier": {
+          "label": "アプリ改修",
+          "planned": 30,
+          "actual": 12
+        }
+      },
+      "priority": {
+        "topAchieved": 3,
+        "topPlanned": 3,
+        "overallScore": 4.4
+      },
+      "deviationMinutes": 12,
+      "sleep": {
+        "avgMinutes": 422,
+        "minMinutes": 420,
+        "maxMinutes": 430
+      },
+      "planImpact": {
+        "avg": 0.2,
+        "distribution": {
+          "0": 4,
+          "1": 1,
+          "2": 0
+        }
+      },
+      "normalizationNotes": [
+        "ハローワークを営業に統一",
+        "写経を回復・生活に統一（読書と休息を兼ねた時間として扱う）"
+      ],
+      "daily": [
+        {
+          "date": "2026-08-03",
+          "sleepMinutes": 420,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-08-04",
+          "sleepMinutes": 420,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-08-05",
+          "sleepMinutes": 430,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-08-06",
+          "sleepMinutes": 420,
+          "planImpact": 1,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-08-07",
+          "sleepMinutes": 420,
+          "planImpact": 0,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-08-08",
+          "sleepMinutes": 420,
+          "planImpact": 2,
+          "topPriority": "達成"
+        },
+        {
+          "date": "2026-08-09",
+          "sleepMinutes": 900,
+          "planImpact": 2,
+          "topPriority": "計画なし"
+        }
+      ],
+      "estimates": [
+        {
+          "date": "2026-08-03",
+          "category": "運用・管理",
+          "label": "土日の計画の報告と今週の計画の評価の文書管理",
+          "planned": 25,
+          "actual": 21,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "運動",
+          "label": "自転車",
+          "planned": 120,
+          "actual": 75,
+          "punched": false
+        },
+        {
+          "date": "2026-08-03",
+          "category": "営業",
+          "label": "クラウドソーシング市場の観測",
+          "planned": 20,
+          "actual": 10,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 50,
+          "actual": 50,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 40,
+          "actual": 40,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 30,
+          "actual": 31,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "基礎学習",
+          "label": "データベース",
+          "planned": 30,
+          "actual": 30,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "制作",
+          "label": "ヒアリング：ヒアリング",
+          "planned": 30,
+          "actual": 31,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "制作",
+          "label": "ヒアリング：振り返り",
+          "planned": 15,
+          "actual": 6,
+          "punched": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "基礎学習",
+          "label": "復習",
+          "planned": 40,
+          "actual": 40,
+          "punched": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 40,
+          "actual": 41,
+          "punched": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 40,
+          "actual": 40,
+          "punched": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "制作",
+          "label": "図書管理アプリ",
+          "planned": 40,
+          "actual": 43,
+          "punched": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "基礎学習",
+          "label": "データベース",
+          "planned": 30,
+          "actual": 34,
+          "punched": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "制作",
+          "label": "ヒアリング：要件定義",
+          "planned": 30,
+          "actual": 30,
+          "punched": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "制作",
+          "label": "ヒアリング：要件定義：振り返り",
+          "planned": 15,
+          "actual": 11,
+          "punched": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "基礎学習",
+          "label": "復習",
+          "planned": 30,
+          "actual": 33,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "制作",
+          "label": "人間視点によるAI活用実績の探索と分析",
+          "planned": 40,
+          "actual": 44,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "制作",
+          "label": "人間視点によるAI活用実績の探索と分析",
+          "planned": 40,
+          "actual": 42,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "制作",
+          "label": "人間視点によるAI活用実績の探索と分析",
+          "planned": 40,
+          "actual": 40,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "基礎学習",
+          "label": "データベース",
+          "planned": 30,
+          "actual": 34,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "基礎学習",
+          "label": "統計とPython",
+          "planned": 30,
+          "actual": 31,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "基礎学習",
+          "label": "復習",
+          "planned": 30,
+          "actual": 30,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "制作",
+          "label": "アプリ改修",
+          "planned": 30,
+          "actual": 12,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "制作",
+          "label": "ヒアリング：技術設計",
+          "planned": 30,
+          "actual": 31,
+          "punched": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "営業",
+          "label": "ヒアリング：技術設計：振り返り",
+          "planned": 15,
+          "actual": 17,
+          "punched": true
+        },
+        {
+          "date": "2026-08-06",
+          "category": "回復・生活",
+          "label": "写経",
+          "planned": 180,
+          "actual": 171,
+          "punched": false
+        },
+        {
+          "date": "2026-08-06",
+          "category": "制作",
+          "label": "ヒアリング：実現計画",
+          "planned": 30,
+          "actual": 28,
+          "punched": true
+        },
+        {
+          "date": "2026-08-06",
+          "category": "制作",
+          "label": "ヒアリング：実現計画：振り返り",
+          "planned": 15,
+          "actual": 12,
+          "punched": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "制作",
+          "label": "攻略Wiki",
+          "planned": 40,
+          "actual": 39,
+          "punched": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "制作",
+          "label": "攻略Wiki",
+          "planned": 40,
+          "actual": 41,
+          "punched": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "基礎学習",
+          "label": "データベース",
+          "planned": 40,
+          "actual": 41,
+          "punched": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "制作",
+          "label": "統計とPython",
+          "planned": 40,
+          "actual": 41,
+          "punched": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "基礎学習",
+          "label": "復習",
+          "planned": 40,
+          "actual": 42,
+          "punched": true
+        }
+      ],
+      "learning": [
+        {
+          "date": "2026-08-03",
+          "category": "Node.js",
+          "title": "非同期通信",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "Node.js",
+          "title": "fetch",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-03",
+          "category": "Node.js",
+          "title": "trim()",
+          "understanding": "完全に理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "サーバー",
+          "title": "Nginx",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "セキュリティ",
+          "title": "プレースホルダー「？」",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "Node.js",
+          "title": "parceINT",
+          "understanding": "完全に理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-04",
+          "category": "Node.js",
+          "title": "Math.ceil()",
+          "understanding": "完全に理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "データベース",
+          "title": "エンティティと属性",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "データベース",
+          "title": "リレーションシップ",
+          "understanding": "要復習",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "データベース",
+          "title": "ER図",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-05",
+          "category": "データベース",
+          "title": "正規化",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "データベース",
+          "title": "第１正規型（1NF)",
+          "understanding": "概ね理解",
+          "reviewed": false
+        },
+        {
+          "date": "2026-08-07",
+          "category": "データベース",
+          "title": "第２正規型(2NF)",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "データベース",
+          "title": "第３正規型(3NF）",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "Node.js",
+          "title": "db.exec()",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "データベース",
+          "title": "CHECK制約",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "データベース",
+          "title": "EXPLAIN",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "ネットワーク",
+          "title": "proxy",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "Node.js",
+          "title": "res.whiteHead()",
+          "understanding": "概ね理解",
+          "reviewed": true
+        },
+        {
+          "date": "2026-08-07",
+          "category": "Node.js",
+          "title": "res.end()",
+          "understanding": "概ね理解",
+          "reviewed": true
+        }
+      ]
+    }
+  ]
+}

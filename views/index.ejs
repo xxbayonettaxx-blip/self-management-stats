@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>自己管理の記録 | 週次ログの統計</title>
+<meta name="description" content="週次ログから機械的に集計した、作業時間・見積もり精度・生活記録の統計">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="page-head">
+  <h1>自己管理の記録</h1>
+  <p>作業の記録を毎日つけています。ここに出しているのは、その記録から機械的に集計した数字です。手で入力し直したものはありません。</p>
+  <p>作業を始める前に所要時間を見積もり、終わってから実績と突き合わせています。見積もりがどれくらい当たっているかが、このページの中心です。</p>
+</header>
+
+<nav class="tabs" aria-label="表示する期間">
+  <button type="button" class="tab is-active" data-view="week">直近の完了週</button>
+  <button type="button" class="tab" data-view="recent">過去4週</button>
+  <button type="button" class="tab" data-view="all">全期間</button>
+</nav>
+
+<noscript>
+  <p class="notice">グラフの表示にはJavaScriptが必要です。数値はすべて下の表に載せているので、グラフが出なくても内容は読めます。期間の切り替えだけが使えません。</p>
+</noscript>
+
+<% const sections = [['week', '直近の完了週（' + weekLabel + '）'], ['recent', '過去4週'], ['all', '全期間']]; %>
+<% sections.forEach(([key, label], index) => { const v = views[key]; %>
+<main class="view<%= index === 0 ? ' is-active' : '' %>" id="view-<%= key %>" data-view="<%= key %>">
+
+  <h2 class="view-title"><%= label %></h2>
+
+  <div class="cards">
+    <% v.cards.forEach(card => { %>
+    <div class="card">
+      <p class="card-label"><%= card.label %></p>
+      <p class="card-value"><%= card.value %></p>
+      <p class="card-note"><%= card.note %></p>
+    </div>
+    <% }) %>
+  </div>
+
+  <section class="block">
+    <h3>見積もりと実績</h3>
+    <p class="note"><% if (key === 'week') { %>点が対角線に近いほど、見積もり通りに終わったことを示します。<% } else { %>週ごとの平均誤差の推移です。下に行くほど見積もりが当たっています。<% } %></p>
+    <div class="chart-wrap"><canvas id="chart-estimate-<%= key %>" height="260"></canvas></div>
+  </section>
+
+  <section class="block">
+    <h3>時間配分</h3>
+    <p class="note">分類の定義は最新のものに統一し、過去にも遡って適用しています。</p>
+    <div class="chart-wrap"><canvas id="chart-time-<%= key %>" height="260"></canvas></div>
+  </section>
+
+  <section class="block">
+    <h3>睡眠と計画への影響度</h3>
+    <p class="note">計画への影響度は体調そのものではなく、その日の計画がどれだけ崩れたかを0〜2で表しています。体調が悪くても計画を守れた日は0です。睡眠時間との強い相関は出ていません。</p>
+    <div class="chart-wrap"><canvas id="chart-sleep-<%= key %>" height="260"></canvas></div>
+  </section>
+
+  <% v.tables.forEach(t => { %><%- include('partials/table', { t }) %><% }) %>
+
+</main>
+<% }) %>
+
+<footer class="page-foot">
+  <h2>このページについて</h2>
+
+  <h3>公開していないもの</h3>
+  <p>次の項目は集計にも出力にも含めていません。生成の段階で機械的に除外しており、運用上の注意で守っているわけではありません。</p>
+  <ul>
+    <% meta.policy.excluded.forEach(item => { %><li><%= item %></li><% }) %>
+  </ul>
+  <p>ヒアリングの相手が特定されうる情報は、練習として行ったものも含めてすべて伏せています。</p>
+
+  <h3>公開しているもの</h3>
+  <p>上に挙げたもの以外は、選ばずにそのまま出しています。「営業」には受注に向けた提案活動と、求職活動（面接・ハローワーク・書類作成）の両方が含まれます。どちらも実際に時間を使った活動なので、分けずに記録しています。都合の良い項目だけを残すと、残りの数字も信用できなくなるためです。</p>
+
+  <h3>記録方法を変えた日</h3>
+  <p><%= meta.regimeStart %> に記録方法を変更しました。それ以前は作業時間を自己申告で記録していたため、30分・60分といった値に丸まりやすく、見積もりと一致しやすい構造になっていました。以降は開始と終了を打刻し、その差から所要時間を出しています。<strong>測定を厳しくしたので、この日を境に数字は下がります。</strong>境界の前後は表の「基準」列で区別できます。</p>
+
+  <h3>数字の出し方</h3>
+  <ul>
+    <li>主指標は平均誤差（分）です。一致率は閾値の取り方で大きく動くため、従指標にしています。</li>
+    <li>見積もり実施率を必ず併記しています。これがないと、見積もりやすい作業だけを選ぶことで誤差をいくらでも小さくできてしまいます。</li>
+    <li>外れた分を除外していません。「最大の外れ1件を除いた値」も併記しますが、元の値も必ず出します。</li>
+    <li>記録できなかった週は0ではなく「記録なし」として残しています。</li>
+    <% (categorySince || []).forEach(line => { %><li><%= line %></li><% }) %>
+    <% (normalization || []).forEach(note => { %><li><%= note %></li><% }) %>
+  </ul>
+
+  <p class="meta">記録した週 <%= meta.weeksRecorded %>/<%= meta.weeksElapsed %>　最終更新 <%= meta.generatedAt.slice(0, 10) %></p>
+</footer>
+
+<script src="/vendor/chart.umd.js"></script>
+<script src="/js/charts.js"></script>
+</body>
+</html>
