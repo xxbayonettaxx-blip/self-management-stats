@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-10T13:22:40.205Z",
+  "generatedAt": "2026-08-20T03:31:35.468Z",
   "regimeStart": "2026-08-08",
   "categorySince": {
     "運動": "2026-08-02"
@@ -59,6 +59,7 @@
       "priority": {
         "topAchieved": 2,
         "topPlanned": 3,
+        "basis": "自己申告",
         "overallScore": 4.2
       },
       "deviationMinutes": 190,
@@ -74,6 +75,12 @@
           "1": 2,
           "2": 1
         }
+      },
+      "planExecution": null,
+      "coverage": {
+        "plannedMinutes": 985,
+        "weekdayMinutes": 1175,
+        "basis": "自己申告"
       }
     },
     {
@@ -111,6 +118,7 @@
       "priority": {
         "topAchieved": 2,
         "topPlanned": 2,
+        "basis": "自己申告",
         "overallScore": 4.5
       },
       "deviationMinutes": 90,
@@ -126,6 +134,12 @@
           "1": 2,
           "2": 0
         }
+      },
+      "planExecution": null,
+      "coverage": {
+        "plannedMinutes": 1050,
+        "weekdayMinutes": 1140,
+        "basis": "自己申告"
       }
     },
     {
@@ -163,6 +177,7 @@
       "priority": {
         "topAchieved": 3,
         "topPlanned": 3,
+        "basis": "自己申告",
         "overallScore": 4.4
       },
       "deviationMinutes": 12,
@@ -178,6 +193,12 @@
           "1": 1,
           "2": 0
         }
+      },
+      "planExecution": null,
+      "coverage": {
+        "plannedMinutes": 1605,
+        "weekdayMinutes": 1617,
+        "basis": "自己申告"
       }
     }
   ]

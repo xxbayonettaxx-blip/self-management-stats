@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-10T13:22:40.205Z",
+  "generatedAt": "2026-08-20T03:31:35.468Z",
   "regimeStart": "2026-08-08",
   "categorySince": {
     "運動": "2026-08-02"
@@ -56,9 +56,16 @@
           "actual": 140
         }
       },
+      "planExecution": null,
+      "coverage": {
+        "plannedMinutes": 985,
+        "weekdayMinutes": 1175,
+        "basis": "自己申告"
+      },
       "priority": {
         "topAchieved": 2,
         "topPlanned": 3,
+        "basis": "自己申告",
         "overallScore": 4.2
       },
       "deviationMinutes": 190,
@@ -86,43 +93,50 @@
           "date": "2026-07-18",
           "sleepMinutes": 450,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-07-19",
           "sleepMinutes": 450,
           "planImpact": 0,
-          "topPriority": "計画なし"
+          "topPriority": "計画なし",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-07-20",
           "sleepMinutes": 330,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 30
         },
         {
           "date": "2026-07-21",
           "sleepMinutes": 420,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 60
         },
         {
           "date": "2026-07-22",
           "sleepMinutes": 450,
           "planImpact": 1,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 30
         },
         {
           "date": "2026-07-23",
           "sleepMinutes": 420,
           "planImpact": 1,
-          "topPriority": "一部"
+          "topPriority": "一部",
+          "deviationMinutes": 70
         },
         {
           "date": "2026-07-24",
           "sleepMinutes": 570,
           "planImpact": 2,
-          "topPriority": "未着手"
+          "topPriority": "未着手",
+          "deviationMinutes": 0
         }
       ],
       "estimates": [
@@ -191,6 +205,32 @@
           "punched": false
         }
       ],
+      "deviations": [
+        {
+          "date": "2026-07-20",
+          "category": "制作",
+          "label": "色、配置、項目、表示内容の変更",
+          "actual": 30
+        },
+        {
+          "date": "2026-07-21",
+          "category": "制作",
+          "label": "ダッシュボード改修",
+          "actual": 60
+        },
+        {
+          "date": "2026-07-22",
+          "category": "営業",
+          "label": "履歴書作成",
+          "actual": 30
+        },
+        {
+          "date": "2026-07-23",
+          "category": "基礎学習",
+          "label": "データベース",
+          "actual": 70
+        }
+      ],
       "learning": []
     },
     {
@@ -225,9 +265,16 @@
           "actual": 130
         }
       },
+      "planExecution": null,
+      "coverage": {
+        "plannedMinutes": 1050,
+        "weekdayMinutes": 1140,
+        "basis": "自己申告"
+      },
       "priority": {
         "topAchieved": 2,
         "topPlanned": 2,
+        "basis": "自己申告",
         "overallScore": 4.5
       },
       "deviationMinutes": 90,
@@ -252,43 +299,50 @@
           "date": "2026-07-25",
           "sleepMinutes": 450,
           "planImpact": 1,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-07-26",
           "sleepMinutes": 420,
           "planImpact": 1,
-          "topPriority": "計画なし"
+          "topPriority": "計画なし",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-07-27",
           "sleepMinutes": 540,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-07-28",
           "sleepMinutes": 450,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-07-29",
           "sleepMinutes": 390,
           "planImpact": 1,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-07-30",
           "sleepMinutes": 400,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 30
         },
         {
           "date": "2026-07-31",
           "sleepMinutes": 380,
           "planImpact": 1,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 60
         }
       ],
       "estimates": [
@@ -387,6 +441,20 @@
           "planned": 60,
           "actual": 60,
           "punched": false
+        }
+      ],
+      "deviations": [
+        {
+          "date": "2026-07-30",
+          "category": "制作",
+          "label": "週次ログに学習記録タブ追加",
+          "actual": 30
+        },
+        {
+          "date": "2026-07-31",
+          "category": "制作",
+          "label": "週次ログアプリ改修",
+          "actual": 60
         }
       ],
       "learning": [
@@ -494,9 +562,16 @@
           "actual": 12
         }
       },
+      "planExecution": null,
+      "coverage": {
+        "plannedMinutes": 1605,
+        "weekdayMinutes": 1617,
+        "basis": "自己申告"
+      },
       "priority": {
         "topAchieved": 3,
         "topPlanned": 3,
+        "basis": "自己申告",
         "overallScore": 4.4
       },
       "deviationMinutes": 12,
@@ -522,43 +597,50 @@
           "date": "2026-08-03",
           "sleepMinutes": 420,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-08-04",
           "sleepMinutes": 420,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-08-05",
           "sleepMinutes": 430,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 12
         },
         {
           "date": "2026-08-06",
           "sleepMinutes": 420,
           "planImpact": 1,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-08-07",
           "sleepMinutes": 420,
           "planImpact": 0,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-08-08",
           "sleepMinutes": 420,
           "planImpact": 2,
-          "topPriority": "達成"
+          "topPriority": "達成",
+          "deviationMinutes": 0
         },
         {
           "date": "2026-08-09",
           "sleepMinutes": 900,
           "planImpact": 2,
-          "topPriority": "計画なし"
+          "topPriority": "計画なし",
+          "deviationMinutes": 40
         }
       ],
       "estimates": [
@@ -833,6 +915,14 @@
           "planned": 40,
           "actual": 42,
           "punched": true
+        }
+      ],
+      "deviations": [
+        {
+          "date": "2026-08-05",
+          "category": "制作",
+          "label": "アプリ改修",
+          "actual": 12
         }
       ],
       "learning": [

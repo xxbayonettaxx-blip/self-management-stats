@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-10T13:22:40.205Z",
+  "generatedAt": "2026-08-20T03:31:35.468Z",
   "regimeStart": "2026-08-08",
   "categorySince": {
     "運動": "2026-08-02"
@@ -55,9 +55,16 @@
         "actual": 12
       }
     },
+    "planExecution": null,
+    "coverage": {
+      "plannedMinutes": 1605,
+      "weekdayMinutes": 1617,
+      "basis": "自己申告"
+    },
     "priority": {
       "topAchieved": 3,
       "topPlanned": 3,
+      "basis": "自己申告",
       "overallScore": 4.4
     },
     "deviationMinutes": 12,
@@ -83,43 +90,50 @@
         "date": "2026-08-03",
         "sleepMinutes": 420,
         "planImpact": 0,
-        "topPriority": "達成"
+        "topPriority": "達成",
+        "deviationMinutes": 0
       },
       {
         "date": "2026-08-04",
         "sleepMinutes": 420,
         "planImpact": 0,
-        "topPriority": "達成"
+        "topPriority": "達成",
+        "deviationMinutes": 0
       },
       {
         "date": "2026-08-05",
         "sleepMinutes": 430,
         "planImpact": 0,
-        "topPriority": "達成"
+        "topPriority": "達成",
+        "deviationMinutes": 12
       },
       {
         "date": "2026-08-06",
         "sleepMinutes": 420,
         "planImpact": 1,
-        "topPriority": "達成"
+        "topPriority": "達成",
+        "deviationMinutes": 0
       },
       {
         "date": "2026-08-07",
         "sleepMinutes": 420,
         "planImpact": 0,
-        "topPriority": "達成"
+        "topPriority": "達成",
+        "deviationMinutes": 0
       },
       {
         "date": "2026-08-08",
         "sleepMinutes": 420,
         "planImpact": 2,
-        "topPriority": "達成"
+        "topPriority": "達成",
+        "deviationMinutes": 0
       },
       {
         "date": "2026-08-09",
         "sleepMinutes": 900,
         "planImpact": 2,
-        "topPriority": "計画なし"
+        "topPriority": "計画なし",
+        "deviationMinutes": 40
       }
     ],
     "estimates": [
@@ -394,6 +408,14 @@
         "planned": 40,
         "actual": 42,
         "punched": true
+      }
+    ],
+    "deviations": [
+      {
+        "date": "2026-08-05",
+        "category": "制作",
+        "label": "アプリ改修",
+        "actual": 12
       }
     ],
     "learning": [

@@ -45,7 +45,7 @@ const TRAVEL_SUBJECT = /^移動$/;
 // 公開してはならない値を、入力側の除外対象フィールドから動的に集める。
 // 固定の禁止語リストだと新しい症状名や業種名を取りこぼすが、
 // 「入力で捨てたはずの値が出力に現れていないか」を照合すれば構造的に検出できる。
-const EXCLUDED_FIELDS = ["ひとこと", "業種", "自己評価", "署名", "主軸維持コメント", "来週の改善アクション", "説明", "メモ", "理由"];
+const EXCLUDED_FIELDS = ["ひとこと", "業種", "自己評価", "署名", "主軸維持コメント", "来週の改善アクション", "説明", "メモ", "理由", "見送り理由"];
 
 function argValue(name) {
   const hit = process.argv.find(a => a.startsWith(name + "="));
@@ -101,6 +101,8 @@ function parseLog(file) {
     weekEnd: title[2],
     totals,
     daily: table("日次状態"),
+    // 計画セクションは2026-08-17の運用開始以降のログにだけ現れる。無い週は空配列のまま扱う。
+    plans: table("計画"),
     work: sections["作業ブロック"] ? parseTable(sections["作業ブロック"]) : [],
     hearings: table("ヒアリング"),
     learning: table("学習ノート"),
@@ -124,6 +126,8 @@ function normalizeCategory(row, notes) {
 }
 
 // ---------- 週単位の集計 ----------
+
+const mean = arr => arr.length > 0 ? arr.reduce((s, v) => s + v, 0) / arr.length : null;
 
 function summarizeWeek(log) {
   const notes = [];
@@ -181,18 +185,65 @@ function summarizeWeek(log) {
   const basis = estimateRows.some(b => b.punched) ? "実測" : "自己申告";
   const measurable = withEstimate.filter(b => b.actual !== null && (basis === "自己申告" || b.punched));
   const errors = measurable.map(b => Math.abs(b.actual - b.planned)).sort((a, b) => b - a);
-  const mean = arr => arr.length > 0 ? arr.reduce((s, v) => s + v, 0) / arr.length : null;
   // 「予定変更を除いた値」はログに変更理由の列が無く自動判別できないため、
   // 意図を推測せず「最大の外れ1件を除いた値」として出す。両方出すことで恣意的な除外を防ぐ（§4）。
   const largest = measurable.length > 0
     ? measurable.reduce((a, b) => Math.abs(b.actual - b.planned) > Math.abs(a.actual - a.planned) ? b : a)
     : null;
 
+  // 日別の計画外時間。週合計と同じくブロック側から数え、日次欄の手入力は使わない。
+  // これを入れ忘れていたため、日次表の「計画外」列が undefined と表示されていた。
+  const deviationByDate = {};
+  for (const b of blocks) {
+    if (b.isTravelRow || b.inPlan) continue;
+    deviationByDate[b.date] = (deviationByDate[b.date] ?? 0) + (b.actual ?? 0);
+  }
+  for (const d of daily) d.deviationMinutes = deviationByDate[d.date] ?? 0;
+
   // 睡眠・疲労も平日で集計する。週末の休養日（15時間睡眠など）が混ざると
   // 平常時の水準として読めない数字になる。日次の明細には全曜日を残すのでグラフでは見える。
   const weekdayDaily = daily.filter(d => isWeekday(d.date));
   const sleeps = weekdayDaily.map(d => d.sleepMinutes).filter(v => v !== null);
   const impacts = weekdayDaily.map(d => d.planImpact).filter(v => v !== null);
+
+  // 計画は平日で測る。週末に計画を立てる運用ではないので、混ぜると分母が歪む。
+  const plans = log.plans.filter(r => isWeekday(r["日付"])).map(r => ({
+    date: r["日付"],
+    category: normalizeCategory(r, notes),
+    label: r["内容"],
+    estimated: num(r["想定（分）"]),
+    actual: num(r["実績（分）"]) ?? 0,
+    blocks: num(r["回数"]) ?? 0,
+    priority: r["優先度"],
+    status: r["状態"],
+    skipReason: r["見送り理由"] === "—" ? null : r["見送り理由"] || null
+  }));
+  const done = plans.filter(p => p.status === "実施済");
+  const topPlans = plans.filter(p => p.priority === "最優先");
+  // 誤差は計画1件の想定と、その計画に紐づく打刻の合計で出す。1つの計画を40分ブロックに
+  // 分けて打刻するため、ブロック単位で想定と比べると意味を持たない（definitions.md §4）。
+  const planErrors = done.filter(p => p.estimated !== null).map(p => Math.abs(p.actual - p.estimated)).sort((a, b) => b - a);
+  const planLargest = done.filter(p => p.estimated !== null).reduce((a, b) => a === null || Math.abs(b.actual - b.estimated) > Math.abs(a.actual - a.estimated) ? b : a, null);
+  // 計画運用では「想定を立てたか」は常にYesになる（計画は想定を必須にしている）。
+  // 代わりに「作業時間のうちどれだけが事前に決まっていたか」を見る。分母は平日の作業時間で、
+  // 計画に入れなかった時間が丸ごと残るので、簡単な作業だけ計画に載せても率は上がらない。
+  const weekdayMinutes = estimateRows.reduce((sum, b) => sum + (b.actual ?? 0), 0);
+  const plannedMinutes = estimateRows.filter(b => b.inPlan).reduce((sum, b) => sum + (b.actual ?? 0), 0);
+  const planExecution = plans.length === 0 ? null : {
+    total: plans.length,
+    done: done.length,
+    skipped: plans.filter(p => p.status === "見送り").length,
+    notStarted: plans.filter(p => p.status === "未着手").length,
+    topTotal: topPlans.length,
+    topDone: topPlans.filter(p => p.status === "実施済").length,
+    mae: planErrors.length > 0 ? Number(mean(planErrors).toFixed(1)) : null,
+    maeExcludingLargest: planErrors.length > 1 ? Number(mean(planErrors.slice(1)).toFixed(1)) : null,
+    withinTolerance: done.filter(p => p.estimated !== null && Math.abs(p.actual - p.estimated) <= MATCH_TOLERANCE).length,
+    measurable: planErrors.length,
+    // 見送り理由は自由記述で、体調や症状に触れることがある（記録アプリ側では必須項目）。
+    // 公開するのは「どの分類が何件見送られたか」までにし、本文は手元のログに留める。
+    skipsByCategory: Object.fromEntries(CATEGORIES.map(c => [c, plans.filter(p => p.status === "見送り" && p.category === c).length]).filter(([, n]) => n > 0))
+  };
 
   const hearingMinutes = log.hearings.reduce((s, r) => s + (num(r["ヒアリング（分）"]) ?? 0) + (num(r["振り返り（分）"]) ?? 0), 0);
   const workMinutes = blocks.reduce((s, b) => s + (b.actual ?? 0), 0);
@@ -209,7 +260,21 @@ function summarizeWeek(log) {
     weekendMinutes: blocks.filter(b => !b.isTravelRow && !isWeekday(b.date)).reduce((sum, b) => sum + (b.actual ?? 0), 0),
     travelMinutes,
     categories,
-    estimate: {
+    // 見積もりの単位は、計画を記録している週かどうかで切り替える。
+    // 2026-08-17から1つの計画を40分ブロックに分けて打刻する運用に変えたため、
+    // ブロック側は想定を持たない。ブロック単位のまま数えると、行動は変わっていないのに
+    // 見積もり実施率だけが急落して見える。単位が変わったことは basis に出して隠さない（§4）。
+    estimate: planExecution ? {
+      basis: "計画単位",
+      blocks: planExecution.total,
+      withEstimate: planExecution.total,
+      punched: planExecution.done,
+      measurable: planExecution.measurable,
+      maeAll: planExecution.mae,
+      maeExcludingLargest: planExecution.maeExcludingLargest,
+      withinTolerance: planExecution.withinTolerance,
+      largestOutlier: planLargest ? { label: planLargest.label, planned: planLargest.estimated, actual: planLargest.actual } : null
+    } : {
       basis,
       blocks: estimateRows.length,
       withEstimate: withEstimate.length,
@@ -220,9 +285,18 @@ function summarizeWeek(log) {
       withinTolerance: measurable.filter(b => Math.abs(b.actual - b.planned) <= MATCH_TOLERANCE).length,
       largestOutlier: largest ? { label: largest.label, planned: largest.planned, actual: largest.actual } : null
     },
+    planExecution,
+    // 網羅率は全期間で同じ問いに答えるので、計画の有無にかかわらず出す。
+    // 判定の出所（自動/自己申告）だけが変わるため、それは基準として添える。
+    coverage: { plannedMinutes, weekdayMinutes, basis: planExecution ? "自動判定" : "自己申告" },
     priority: {
-      topAchieved: num(log.summary["最優先 達成/計画"]?.split("/")[0]) ?? num(log.summary["最優先達成/計画"]?.split("/")[0]),
-      topPlanned: num(log.summary["最優先 達成/計画"]?.split("/")[1]) ?? num(log.summary["最優先達成/計画"]?.split("/")[1]),
+      // 計画データがある週は打刻から導いた値を使う。週次サマリーの手入力は
+      // 集計時の記憶に依存し、日をまたぐと実際の打刻とずれる。
+      topAchieved: planExecution ? planExecution.topDone
+        : num(log.summary["最優先 達成/計画"]?.split("/")[0]) ?? num(log.summary["最優先達成/計画"]?.split("/")[0]),
+      topPlanned: planExecution ? planExecution.topTotal
+        : num(log.summary["最優先 達成/計画"]?.split("/")[1]) ?? num(log.summary["最優先達成/計画"]?.split("/")[1]),
+      basis: planExecution ? "打刻" : "自己申告",
       overallScore: num(log.summary["総合スコア"]) ?? num(log.summary["スコア"])
     },
     // 逸脱は日次の欄ではなく 計画内=No のブロックから数える。旧形式の出力では
@@ -240,7 +314,12 @@ function summarizeWeek(log) {
     normalizationNotes: notes,
     // 明細は公開する列だけを持つ。ひとこと・業種・自己評価などはここで落とす（definitions.md §6）。
     daily,
-    estimates: withEstimate.map(b => ({ date: b.date, category: b.category, label: b.label, planned: b.planned, actual: b.actual, punched: b.punched })),
+    estimates: planExecution
+      ? plans.filter(p => p.status === "実施済").map(p => ({ date: p.date, category: p.category, label: p.label, planned: p.estimated, actual: p.actual, punched: true, blocks: p.blocks }))
+      : withEstimate.map(b => ({ date: b.date, category: b.category, label: b.label, planned: b.planned, actual: b.actual, punched: b.punched })),
+    // 逸脱は合計だけでは判断材料にならない。内容を並べれば性質（自分の道具作りか、
+    // 主軸に沿う計画外か）が読み取れる。新しい判断もフィールドも要らない（definitions.md §4-2）。
+    deviations: estimateRows.filter(b => !b.inPlan).map(b => ({ date: b.date, category: b.category, label: b.label, actual: b.actual })),
     learning: log.learning.map(r => ({ date: r["日付"], category: r["カテゴリ"], title: r["見出し"], understanding: r["理解度"], reviewed: r["復習"] === "○" }))
   };
 }
@@ -381,7 +460,7 @@ function build() {
     recordedWeekdays: w.recordedWeekdays, recordedDays: w.recordedDays, weekendMinutes: w.weekendMinutes,
     totalMinutes: w.totalMinutes, travelMinutes: w.travelMinutes, categories: w.categories,
     estimate: w.estimate, priority: w.priority, deviationMinutes: w.deviationMinutes,
-    sleep: w.sleep, planImpact: w.planImpact
+    sleep: w.sleep, planImpact: w.planImpact, planExecution: w.planExecution, coverage: w.coverage
   };
 
   // 「今週」ではなく直近の完了週を出す。週の初日にアクセスされると1日分のグラフになるため（§8）。

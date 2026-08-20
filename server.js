@@ -58,25 +58,41 @@ function table(title, note, headers, rows) { return { title, note, headers, rows
 function buildWeekView(current) {
   const w = current.week;
   const e = w.estimate;
+  const p = w.planExecution;
+  const unit = p ? "件" : "ブロック";
   const cards = [
     { label: "記録日数", value: `${w.recordedWeekdays ?? w.recordedDays}/5`, note: `平日ベース　週末を含む記録は${w.recordedDays}日` },
     { label: "平均誤差", value: e.maeAll === null ? "—" : `${e.maeAll}分`, note: e.maeExcludingLargest === null ? `基準：${e.basis}` : `最大の外れ1件を除くと ${e.maeExcludingLargest}分` },
-    { label: "見積もり実施率", value: percent(e.withEstimate, e.blocks), note: `${e.withEstimate}/${e.blocks}ブロック　基準：${e.basis}` },
-    { label: "最優先の達成", value: `${dash(w.priority.topAchieved)}/${dash(w.priority.topPlanned)}`, note: `計画外 ${w.deviationMinutes}分` }
+    // 計画運用では想定は必須なので「見積もりを立てた割合」は必ず100%になり、指標にならない。
+    // 事前にどれだけ決まっていたかを時間で見る方に置き換える。
+    { label: "計画の網羅率", value: percent(w.coverage.plannedMinutes, w.coverage.weekdayMinutes), note: `平日の作業 ${minutes(w.coverage.weekdayMinutes)} のうち ${minutes(w.coverage.plannedMinutes)} が計画内　基準：${w.coverage.basis}` },
+    { label: "最優先の達成", value: `${dash(w.priority.topAchieved)}/${dash(w.priority.topPlanned)}`, note: `計画外 ${w.deviationMinutes}分　基準：${w.priority.basis ?? "自己申告"}` }
   ];
+  // 計画を記録している週だけカードを足す。記録の無い週に0や—を出すと、
+  // 「計画を立てなかった」と「そもそも計画を記録する運用でなかった」が同じ見た目になる。
+  if (p) cards.splice(3, 0, { label: "計画の実行率", value: `${p.done}/${p.total}`, note: `見送り ${p.skipped}件　未着手 ${p.notStarted}件` });
   const tables = [
     // 枠を書かないと、-18分のような行が「守れなかった記録」として読まれる。
     // 何を見ているのか、なぜ自主制作ばかり並ぶのかを表の直前で示す。
-    table("見積もりと実績", `想定を立てた ${e.withEstimate}件を、外れたものも含めて全件載せています。内容に並ぶのは自主制作・学習・日課の記録です。案件の内容は守秘のため出していません。`,
-      ["日付", "分類", "内容", "想定", "実績", "差", "記録"],
+    table("見積もりと実績",
+      (p
+        ? `朝に立てた計画 ${p.done}件を、外れたものも含めて全件載せています。1つの計画を40分ずつに区切って打刻しているので、想定と比べるのは計画1件の合計時間です。ブロックごとに比べると40分タイマーの正確さを測ることになり、見積もりの精度になりません。`
+        : `想定を立てた ${e.withEstimate}件を、外れたものも含めて全件載せています。`)
+      + `内容に並ぶのは自主制作・学習・日課の記録です。案件の内容は守秘のため出していません。`,
+      p ? ["日付", "分類", "内容", "想定", "実績", "差", "打刻回数"] : ["日付", "分類", "内容", "想定", "実績", "差", "記録"],
       w.estimates.map(r => [shortDate(r.date), r.category, r.label, minutes(r.planned), minutes(r.actual),
-        `${r.actual - r.planned > 0 ? "+" : ""}${r.actual - r.planned}分`, r.punched ? "実測" : "推定"])),
+        `${r.actual - r.planned > 0 ? "+" : ""}${r.actual - r.planned}分`, p ? `${r.blocks}回` : r.punched ? "実測" : "推定"])),
     table("時間配分", `合計 ${minutes(w.totalMinutes)}（${hours(w.totalMinutes)}）。うち週末 ${minutes(w.weekendMinutes ?? 0)}。移動 ${minutes(w.travelMinutes)} は内訳から分離しています。`,
       ["分類", "時間", "割合"],
       CATEGORIES.map(c => [c, minutes(w.categories[c]), share(w.categories[c], sumCategories(w.categories))])),
     table("睡眠と計画への影響度", `計画への影響度は行動基準（0:予定通り／1:翌日に持ち越した／2:予定を削った）。体調そのものではなく、計画がどれだけ崩れたかを表します。`,
       ["日付", "睡眠", "計画への影響度", "最優先", "計画外"],
       w.daily.map(d => [shortDate(d.date), `${minutes(d.sleepMinutes)}（${hours(d.sleepMinutes)}）`, dash(d.planImpact), dash(d.topPriority), `${d.deviationMinutes}分`])),
+    table("計画外の作業", `計画に無かった作業を全件載せています。合計 ${minutes(w.deviationMinutes)}。`
+      + (p ? `判定は自動です。朝に登録した計画から打刻を始めた作業を計画内、それ以外を計画外として、システムが振り分けています。` : `判定は記録時の自己申告です。`)
+      + `時間帯では区切っていません（夜に回せば計画外でなくなる、という抜け道を作らないため）。計画にあって時間が超過したものは含めません。それは上の見積もり誤差で見ています。`,
+      ["日付", "分類", "内容", "時間"],
+      (w.deviations || []).map(d => [shortDate(d.date), d.category, d.label, minutes(d.actual)])),
     table("学習ノート", `「要復習」も隠していません。`,
       ["日付", "カテゴリ", "見出し", "理解度"],
       w.learning.map(l => [shortDate(l.date), l.category, l.title, l.understanding]))
@@ -88,26 +104,40 @@ function buildWeekView(current) {
 function weeklyRows(weeks) {
   return weeks.map(w => recorded(w)
     ? [`${shortDate(w.weekStart)}〜${shortDate(w.weekEnd)}`, minutes(w.totalMinutes),
-      ratio(w.estimate.withEstimate, w.estimate.blocks),
+      percent(w.coverage.plannedMinutes, w.coverage.weekdayMinutes),
+      `${w.estimate.withEstimate}/${w.estimate.blocks}`,
       w.estimate.maeAll === null ? "—" : `${w.estimate.maeAll}分`,
       w.estimate.maeExcludingLargest === null ? "—" : `${w.estimate.maeExcludingLargest}分`,
       ratio(w.estimate.withinTolerance, w.estimate.measurable), w.estimate.basis]
-    : [`${shortDate(w.weekStart)}〜${shortDate(w.weekEnd)}`, "記録なし", "—", "—", "—", "—", "—"]);
+    : [`${shortDate(w.weekStart)}〜${shortDate(w.weekEnd)}`, "記録なし", "—", "—", "—", "—", "—", "—"]);
 }
 
 const sum2 = (weeks, key) => weeks.reduce((s, w) => s + w.estimate[key], 0);
 
 function buildRangeView(weeks, label) {
   const live = weeks.filter(recorded);
-  const sum = key => live.reduce((s, w) => s + (w[key] ?? 0), 0);
+  const sum = key => live.reduce((s, w) => s + (key === "coveragePlanned" ? w.coverage.plannedMinutes : key === "coverageWeekday" ? w.coverage.weekdayMinutes : w[key] ?? 0), 0);
   const measurable = live.reduce((s, w) => s + w.estimate.measurable, 0);
   const errorWeighted = live.reduce((s, w) => s + (w.estimate.maeAll ?? 0) * w.estimate.measurable, 0);
   const cards = [
     { label: "記録した週", value: `${live.length}/${weeks.length}`, note: `${label}　指標は平日ベース` },
-    { label: "平均誤差", value: measurable ? `${(errorWeighted / measurable).toFixed(1)}分` : "—", note: `対象 ${measurable}件` },
-    { label: "見積もり実施率", value: percent(sum2(live, "withEstimate"), sum2(live, "blocks")), note: `${sum2(live, "withEstimate")}/${sum2(live, "blocks")}ブロック` },
+    { label: "平均誤差", value: measurable ? `${(errorWeighted / measurable).toFixed(1)}分` : "—",
+      // 単位が違う週を1つの平均にまとめている。隠すと数字だけが独り歩きするので注記に出す。
+      note: new Set(live.map(w => w.estimate.basis)).size > 1
+        ? `対象 ${measurable}件　単位の異なる週が混ざっています（週ごとの表を参照）`
+        : `対象 ${measurable}件　基準：${live[0]?.estimate.basis ?? "—"}` },
+    { label: "計画の網羅率", value: percent(sum("coveragePlanned"), sum("coverageWeekday")), note: `平日の作業 ${minutes(sum("coverageWeekday"))} のうち ${minutes(sum("coveragePlanned"))} が計画内` },
     { label: "作業時間", value: minutes(sum("totalMinutes")), note: hours(sum("totalMinutes")) }
   ];
+  // 計画を記録していた週だけを分母にする。運用開始前の週を混ぜると実行率が薄まり、
+  // 「計画を守れていない」ように読めてしまう。対象週数を注記に出して範囲を明示する。
+  const planWeeks = live.filter(w => w.planExecution);
+  if (planWeeks.length > 0) {
+    const done = planWeeks.reduce((s, w) => s + w.planExecution.done, 0);
+    const total = planWeeks.reduce((s, w) => s + w.planExecution.total, 0);
+    const skipped = planWeeks.reduce((s, w) => s + w.planExecution.skipped, 0);
+    cards.splice(3, 0, { label: "計画の実行率", value: percent(done, total), note: `${done}/${total}件　見送り ${skipped}件　対象 ${planWeeks.length}週` });
+  }
   // その分類を記録していた週が1つも無ければ合計もnull（未記録）。0分と未記録は別物。
   const totals = Object.fromEntries(CATEGORIES.map(c => {
     const recordedWeeks = live.filter(w => w.categories[c] !== null && w.categories[c] !== undefined);
@@ -115,8 +145,8 @@ function buildRangeView(weeks, label) {
   }));
   const grand = sumCategories(totals);
   const tables = [
-    table("週ごとの見積もり精度", "平均誤差が主指標、±10分以内は従指標です。見積もり実施率を併記しないと、見積もりやすい作業だけ選ぶことで誤差をいくらでも小さくできます。",
-      ["週", "作業時間", "見積もり実施率", "平均誤差", "最大の外れを除く", "±10分以内", "基準"],
+    table("週ごとの見積もり精度", "平均誤差が主指標、±10分以内は従指標です。「事前に決めていた分」を併記しないと、見積もりやすい作業だけ選ぶことで誤差をいくらでも小さくできます。2026-08-17から朝に計画を登録して打刻を紐づける方式に変えたため、それ以降の週は単位が計画1件、それ以前は作業ブロック1つです。基準の列に出しています。",
+      ["週", "作業時間", "計画の網羅率", "見積もりの件数", "平均誤差", "最大の外れを除く", "±10分以内", "基準"],
       weeklyRows(weeks)),
     table("時間配分", "分類の定義は最新のものに統一し、過去にも遡って適用しています。",
       ["分類", "時間", "割合"],
