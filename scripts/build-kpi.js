@@ -358,6 +358,19 @@ function verify(logs, weeks, output) {
     if (value && typeof value === "object") Object.values(value).forEach(collect);
   })(output);
   const serialized = JSON.stringify(output);
+  // 公開対象として意図的に出している入力値。除外フィールドの値がこれと一致した場合、
+  // 出力に現れているのは公開側が出所であって漏洩ではない。
+  // 実例: 学んだ内容を作業の「ひとこと」に書き、同じ語を学習ノートの「見出し」にしていた
+  // （どちらも「HTTPレスポンス」）。見出しは公開項目なので、ひとことを咎めても消せない。
+  const PUBLISHED_FIELDS = ["分類", "内容", "カテゴリ", "見出し", "理解度", "最優先", "優先度", "状態", "日付"];
+  const publishedValues = new Set();
+  for (const log of logs) {
+    for (const rows of [log.daily, log.work, log.learning, log.plans]) {
+      for (const row of rows || []) for (const [key, value] of Object.entries(row || {})) {
+        if (PUBLISHED_FIELDS.includes(key)) publishedValues.add(String(value || "").trim());
+      }
+    }
+  }
   const leaked = new Set();
   for (const log of logs) {
     const tables = [log.daily, log.work, log.hearings, log.learning, [log.summary]];
@@ -365,6 +378,7 @@ function verify(logs, weeks, output) {
       if (!EXCLUDED_FIELDS.includes(key)) continue;
       const v = String(value || "").trim();
       if (v.length < 3 || v === "—") continue;
+      if (publishedValues.has(v)) continue;
       // 値がそのまま出力の項目になっている場合（業種名などの短い値もここで捕まる）。
       if (leafStrings.has(v)) leaked.add(`${key}「${v.slice(0, 24)}」`);
       // 長い自由記述は他の文に紛れ込む形でも漏れうるので、部分一致でも見る。
