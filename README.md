@@ -73,12 +73,6 @@ npm run build  # 週次ログ → data/*.json
 node scripts/build-kpi.js --logs=別のフォルダ --out=別のフォルダ
 ```
 
-引数で入出力先を変えられます。
-
-```bash
-node scripts/build-kpi.js --logs=別のフォルダ --out=別のフォルダ
-```
-
 ## 追記せず、毎回すべて作り直す
 
 **差分を追記しない。毎回ゼロから全期間を再生成する。**
